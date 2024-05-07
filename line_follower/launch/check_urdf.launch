@@ -4,7 +4,7 @@
 
   <arg name="model" default="$(find line_follower)/urdf/mogi_bot.xacro"/>
   <arg name="gui" default="true" />
-  <arg name="rvizconfig" default="$(find line_follower)/rviz/check_urdf.rviz" />
+  <arg name="rvizconfig" default="$(find line_follower)/rviz/mogi_bot.rviz" />
 
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
   <param name="use_gui" value="$(arg gui)"/>
