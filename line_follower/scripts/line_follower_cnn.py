@@ -34,7 +34,7 @@ session = InteractiveSession(config=config)
 rospy.init_node('line_follower')
 
 rospack = rospkg.RosPack()
-path = rospack.get_path('turtlebot3_mogi')
+path = rospack.get_path('line_follower')
 model_path = path + "/network_model/model.best.h5"
 
 print("[INFO] Version:")
@@ -180,7 +180,7 @@ qMono = BufferQueue(queueSize)
 bridge = CvBridge()
 
 # Define your image topic
-image_topic = "/camera/image/compressed"
+image_topic = "/head_camera/image_raw/compressed"
 # Set up your subscriber and define its callback
 rospy.Subscriber(image_topic, CompressedImage, queueMonocular)
 
