@@ -6,11 +6,8 @@
 [image4]: ./assets/Gazebo_sim.png "Gazebo szimuláció"
 [image5]: ./assets/rqt_cam.png "Kamera kép - rqt"
 
-# Robotrendszerek laboratórium projekt feladat
-Robotrendszerek laboratórium tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettünk egy mobil robotot.
-
-# Vonalkövető versenyautó programozása
-A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
+# Kognitív robotika projekt feladat
+Kognitív robotika tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettem egy mobil robotot.
 
 # Tartalomjegyzék
 1. [Kezdőcsomag](#Kezdőcsomag)  
@@ -35,13 +32,13 @@ A versenyautó tervezésnék ötletét internetes forrásból vettük, ami egy k
   ![alt text][image1] 
 
 # Versenypálya
-A versenypályát szintén Solidworks-ben egy letöltött, és importált kép segítségével terveztem meg, aminek kontúrját körberajzolva jutottam el a Gazeboban használt modellig. 
+A versenypályát szintén Solidworks-ben egy letöltött, és importált kép segítségével terveztem meg, aminek kontúrját körberajzoltam Besier-spline-ok segítségével, és kiexportáltam egy `.stl` fájlt.
 
   A pálya kontrúja:
 
   ![alt text][image2] 
 
-A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készült, amit az alapértelmezett Gazebo modellek telepítési könyvtárában kell elhelyezni, hogy megtalálja a modell behíváskor a gazebo a `.dae` és `.stl` fájlokat. Amennyiben nem látjuk a `.gazebo` könyvtárat akkor láthatóvá kell tenni a rejtett könyvtárakat is a számítógép beállításaiban.
+Blenderbe beimportálva készítettem egy a gazebo által is feldolgozható collada mesht, a színek megfelelő megjelenítése érdekében, amit az alapértelmezett Gazebo modellek telepítési könyvtárában kell elhelyezni, hogy megtalálja a modell behíváskor a gazebo a `.dae` és `.stl` fájlokat. Amennyiben nem látjuk a `.gazebo` könyvtárat akkor láthatóvá kell tenni a rejtett könyvtárakat is a számítógép beállításaiban.
 
 
   A sikeres futtatáshoz az alábbi fájlokat kell a pálya neve alatti Gazebo modell  könyvtárban létrehozni. A `Gazebo_modell` könyvtárban a `monaco` mappát kell ide beilleszteni:
@@ -64,7 +61,7 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
 
 # Ackermann kormányzás
 
-# Képfeldolgozás OpenCV-vel
+# Képfeldolgozás neurális hálóval
 
 # Szimuláció futtatása
 
