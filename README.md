@@ -17,8 +17,8 @@ Kognitív robotika tárgynak féléves projekt feladata, ahol ROS Noetic környe
 5. [Alaklmazott szenzorok](#Alaklmazott-szenzorok)  
 5.1. [Kamera](#Kamera)
 6. [Ackermann kormányzás](#Ackerman-kormányzás)
-7. [Képfeldolgozás neurális hálóval](#Képfeldolgozás-neurális-hálóval])
-7.1. [Neurális háló tanítása](#[Neurális-háló-tanítása])
+7. [Képfeldolgozás neurális hálóval](#Képfeldolgozás-neurális-hálóval)
+7.1. [Neurális háló tanítása](#Neurális-háló-tanítása)
 8. [Szimuláció futtatása](#Szimuláció-futtatása)
 9. [Telepítési útmutató](#Telepítési-útmutató)
 
