@@ -10,41 +10,37 @@
 Kognitív robotika tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettem egy mobil robotot.
 
 # Tartalomjegyzék
-1. [Kezdőcsomag](#Kezdőcsomag)  
-2. [Versenyautó megtervezése](#Versenyautó-megtervezése)
-3. [Versenypálya](#Versenypálya)
-4. [Gazebo szimuláció](#Gazebo-szimuláció)
-5. [Alaklmazott szenzorok](#Alaklmazott-szenzorok)  
-5.1. [Kamera](#Kamera)
-6. [Ackermann kormányzás](#Ackerman-kormányzás)
-7. [Képfeldolgozás neurális hálóval](#Képfeldolgozás-neurális-hálóval)  
-7.1. [Neurális háló tanítása](#Neurális-háló-tanítása)
-8. [Szimuláció futtatása](#Szimuláció-futtatása)
-9. [Telepítési útmutató](#Telepítési-útmutató)
+1. [Versenyautó megtervezése](#Versenyautó-megtervezése)
+2. [Versenypálya](#Versenypálya)
+3. [Gazebo szimuláció](#Gazebo-szimuláció)
+4. [Alaklmazott szenzorok](#Alaklmazott-szenzorok)  
+4.1. [Kamera](#Kamera)
+5. [Skid steer kormáynzás](#Skid-steer-kormáynzás)
+6. [Képfeldolgozás neurális hálóval](#Képfeldolgozás-neurális-hálóval)  
+6.1. [Neurális háló tanítása](#Neurális-háló-tanítása)
+7. [Szimuláció futtatása](#Szimuláció-futtatása)
+8. [Telepítési útmutató](#Telepítési-útmutató)
 
-# Kezdőcsomag
-A kezdőcsomagban a tantárgy során használt plug-in-ket már tartalmazza, illetve az alapvető .launch fájlokat, amikkel megjeleníthetjük a robotot, pályát, illetve a kettőt egy térben.
 
 # Versenyautó megtervezése
-A versenyautó tervezésnék ötletét internetes forrásból vettük, ami egy kis lego kocsi, amit Solidworks-ben az egyszerűbb kezelhetőség érdekében módosítottam.
+A versenyautó tervezésnék ötletét internetes forrásból vettem, ami egy kis lego kocsi, amit Solidworks-ben az egyszerűbb kezelhetőség érdekében módosítottam.
 
   Lego verseny kocsi: 
 
   ![alt text][image1] 
 
 # Versenypálya
-A versenypályát szintén Solidworks-ben egy letöltött, és importált kép segítségével terveztem meg, aminek kontúrját körberajzoltam Besier-spline-ok segítségével, és kiexportáltam egy `.stl` fájlt.
+A versenypályát szintén Solidworks-ben egy letöltött, és importált kép segítségével terveztem meg, aminek kontúrját körberajzoltam Besier görbékkel, és kiexportáltam egy `.stl` fájlt.
 
   A pálya kontrúja:
 
   ![alt text][image2] 
 
-Blenderbe beimportálva készítettem egy a gazebo által is feldolgozható collada mesht, a színek megfelelő megjelenítése érdekében, amit az alapértelmezett Gazebo modellek telepítési könyvtárában kell elhelyezni, hogy megtalálja a modell behíváskor a gazebo a `.dae` és `.stl` fájlokat. Amennyiben nem látjuk a `.gazebo` könyvtárat akkor láthatóvá kell tenni a rejtett könyvtárakat is a számítógép beállításaiban.
+Blenderbe beimportálva készítettem egy a gazebo által is feldolgozható collada mesht, a színek megfelelő megjelenítése érdekében. Ahhoz, hogy a Gazebo megnyitáskor lássa a modellt, az alábbi sort kell a `.bashrc` hozzá adni.
 
-
-  A sikeres futtatáshoz az alábbi fájlokat kell a pálya neve alatti Gazebo modell  könyvtárban létrehozni. A `Gazebo_modell` könyvtárban a `monaco` mappát kell ide beilleszteni:
-
-  ![alt text][image3]
+```console
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/bme_catkin_ws/src/KogRob_HW_23_24/gazebo_models
+```
 
 # Gazebo szimuláció
 
@@ -60,7 +56,7 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
 
   ![alt text][image5]
 
-# Ackermann kormányzás
+# Skid steer kormáynzás
 
 # Képfeldolgozás neurális hálóval
 
