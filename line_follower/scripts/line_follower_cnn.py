@@ -127,7 +127,7 @@ class cvThread(threading.Thread):
 
         if prediction == 0: # Forward
             self.cmd_vel.angular.z = 0
-            self.cmd_vel.linear.x = 0.1
+            self.cmd_vel.linear.x = 0.2
         elif prediction == 1: # Left
             self.cmd_vel.angular.z = -0.2
             self.cmd_vel.linear.x = 0.05
@@ -135,7 +135,7 @@ class cvThread(threading.Thread):
             self.cmd_vel.angular.z = 0.2
             self.cmd_vel.linear.x = 0.05
         else: # Nothing
-            self.cmd_vel.angular.z = 0.1
+            self.cmd_vel.angular.z = 0.0
             self.cmd_vel.linear.x = 0.0
 
         # Publish cmd_vel

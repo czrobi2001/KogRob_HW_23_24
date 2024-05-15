@@ -3,37 +3,21 @@
 
   <!-- Differential drive with odometry -->
   <gazebo>
-    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-      <updateRate>10</updateRate>
-      <alwaysOn>true</alwaysOn>
-      <robotNamespace>/</robotNamespace>
-      <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
-      <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
-      <leftRearJoint>rear_left_wheel_joint</leftRearJoint>
-      <rightRearJoint>rear_right_wheel_joint</rightRearJoint>
-      <wheelSeparation>0.4</wheelSeparation>
-      <wheelDiameter>0.1</wheelDiameter>
-      <robotBaseFrame>base_footprint</robotBaseFrame>
-      <torque>10</torque>
+    <plugin name="ros_force_based_move" filename="libgazebo_ros_force_based_move.so">
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
-      <publishWheelTF>false</publishWheelTF>
-      <publishWheelJointState>false</publishWheelJointState>
-      <rosDebugLevel>na</rosDebugLevel>
-      <wheelAcceleration>0</wheelAcceleration>
-      <wheelTorque>10</wheelTorque>
-      <odometrySource>world</odometrySource>
-      <publishTf>1</publishTf>
-      <publishOdomTF>true</publishOdomTF>
-      <covariance_x>0.0001</covariance_x>
-      <covariance_y>0.0001</covariance_y>
-      <covariance_yaw>0.0001</covariance_yaw>
-      <broadcastTF>true</broadcastTF>
+      <torque_yaw_velocity_p_gain>10000.0</torque_yaw_velocity_p_gain>
+      <force_x_velocity_p_gain>10000.0</force_x_velocity_p_gain>
+      <force_y_velocity_p_gain>10000.0</force_y_velocity_p_gain>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <odometryRate>50.0</odometryRate>
+      <publishOdometryTf>true</publishOdometryTf>
     </plugin>
+
   </gazebo>
 
-  <!-- Camera -->
+<!-- Camera -->
   <gazebo reference="camera_link">
     <sensor type="camera" name="camera1">
       <update_rate>30.0</update_rate>
