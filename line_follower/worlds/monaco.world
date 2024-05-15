@@ -28,7 +28,7 @@
               <size>100 100</size>
             </plane>
           </geometry>
-         <surface>
+          <surface>
             <friction>
               <ode>
                 <mu>100</mu>
@@ -117,10 +117,10 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <state world_name='default'>
-      <sim_time>30 520000000</sim_time>
-      <real_time>31 143068357</real_time>
-      <wall_time>1715708054 370597108</wall_time>
-      <iterations>30520</iterations>
+      <sim_time>86 610000000</sim_time>
+      <real_time>66 499182759</real_time>
+      <wall_time>1715811803 939920636</wall_time>
+      <iterations>56090</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -132,10 +132,10 @@
         </link>
       </model>
       <model name='monaco'>
-        <pose>-10.7367 -11.911 -0.096093 0 -0 0</pose>
+        <pose>-10.7367 -11.911 -0.099876 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>-10.7367 -11.911 -0.096093 0 -0 0</pose>
+          <pose>-10.7367 -11.911 -0.099876 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -243,7 +243,7 @@
     </model>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-15.5743 -4.74582 3.33252 0 0.379643 -0.427805</pose>
+        <pose>-13.4168 -9.20361 1.11185 0 0.363643 -0.259805</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

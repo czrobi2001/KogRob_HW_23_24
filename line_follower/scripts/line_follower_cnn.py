@@ -113,6 +113,8 @@ class cvThread(threading.Thread):
 
     def processImage(self, img):
 
+        global pred_prev
+
         image = cv2.resize(img, (image_size, image_size))
         image = img_to_array(image)
         image = np.array(image, dtype="float") / 255.0
@@ -121,22 +123,52 @@ class cvThread(threading.Thread):
         
         with tf.device('/gpu:0'):
             prediction = np.argmax(model(image, training=False))
-                
-        print("Prediction %d, elapsed time %.3f" % (prediction, time.time()-self.last_time))
-        self.last_time = time.time()
+
+        last_change = time.time()-self.last_time
+
+        print("Prediction %d, elapsed time %.3f" % (prediction, last_change ))
+        
+        if pred_prev != prediction:
+            self.last_time = time.time()
+
 
         if prediction == 0: # Forward
             self.cmd_vel.angular.z = 0
-            self.cmd_vel.linear.x = 0.2
+
+            if last_change > 3:
+                self.cmd_vel.linear.x = 1
+            else:
+                self.cmd_vel.linear.x = 0.2
+
         elif prediction == 1: # Left
-            self.cmd_vel.angular.z = -0.2
-            self.cmd_vel.linear.x = 0.05
+            if last_change > 0.5:
+                self.cmd_vel.angular.z = -1
+                self.cmd_vel.linear.x = 0
+            else:
+                self.cmd_vel.angular.z = -0.5
+                self.cmd_vel.linear.x = 0.02
+
         elif prediction == 2: # Right
-            self.cmd_vel.angular.z = 0.2
-            self.cmd_vel.linear.x = 0.05
+            if last_change > 0.5:
+                self.cmd_vel.angular.z = 1
+                self.cmd_vel.linear.x = 0.02
+            else:
+                self.cmd_vel.angular.z = 0.5
+                self.cmd_vel.linear.x = 0.02
+
         else: # Nothing
             self.cmd_vel.angular.z = 0.0
             self.cmd_vel.linear.x = 0.0
+
+
+
+        
+        
+
+        if pred_prev != prediction:
+            self.last_time = time.time()
+        
+        pred_prev = prediction
 
         # Publish cmd_vel
         pub.publish(self.cmd_vel)
@@ -174,6 +206,7 @@ def queueMonocular(msg):
         qMono.put(cv2Img)
 
 
+pred_prev = 0
 queueSize = 1      
 qMono = BufferQueue(queueSize)
 
