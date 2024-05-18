@@ -128,10 +128,11 @@ class cvThread(threading.Thread):
 
         print("Prediction %d, elapsed time %.3f" % (prediction, last_change ))
         
+        # reset the timer when change the cnn output
         if pred_prev != prediction:
             self.last_time = time.time()
 
-
+        # last change reaches defined value change the speed/rotation
         if prediction == 0: # Forward
             self.cmd_vel.angular.z = 0
 
@@ -160,10 +161,6 @@ class cvThread(threading.Thread):
             self.cmd_vel.angular.z = 0.0
             self.cmd_vel.linear.x = 0.0
 
-
-
-        
-        
 
         if pred_prev != prediction:
             self.last_time = time.time()
