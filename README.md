@@ -257,3 +257,5 @@ Az előző részben említett problémákra végül a következő megoldásokat 
 ### Az alkalmazott megoldások hátrányai
 1. az meghatározott időértékek alapvetően a jelenlegi pálya alapján lettek kikísérletezve, így nem garantálható, hogy minden más esetben megfelleően fog működni
 2. változtatva a beavatkozás mértékét új pálya ívekre futhat a robot az eddig megszokottól, így lehetséges, hogy újabb tanítás lesz szükséges az új képekkel
+
+<video src="./assets/gazebo.mp4" width="320" height="240" controls></video>
