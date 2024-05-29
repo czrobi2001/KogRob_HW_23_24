@@ -8,8 +8,8 @@
 
   <!-- Robot pose -->
   <!-- Inititalize it's position in the desired location inside the world -->
- <arg name="x" default="-0.45"/>
-  <arg name="y" default="0.31"/>
+ <arg name="x" default="0.96"/>
+  <arg name="y" default="-0.49"/>
   <arg name="z" default="0.1"/>
   <arg name="roll" default="0"/>
   <arg name="pitch" default="0"/>

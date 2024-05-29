@@ -23,7 +23,7 @@ import h5py
 import time
 
 # Set image size
-image_size = 24
+image_size = 128
 
 # Initialize Tensorflow session
 config = ConfigProto()
@@ -134,36 +134,22 @@ class cvThread(threading.Thread):
 
         # last change reaches defined value change the speed/rotation
         if prediction == 0: # Forward
+            self.cmd_vel.linear.x = 0.5
             self.cmd_vel.angular.z = 0
-
-            if last_change > 3:
-                self.cmd_vel.linear.x = 1
-            else:
-                self.cmd_vel.linear.x = 0.2
-
-        elif prediction == 1: # Left
-            if last_change > 0.5:
-                self.cmd_vel.angular.z = -1
-                self.cmd_vel.linear.x = 0
-            else:
-                self.cmd_vel.angular.z = -0.5
-                self.cmd_vel.linear.x = 0.02
-
-        elif prediction == 2: # Right
-            if last_change > 0.5:
-                self.cmd_vel.angular.z = 1
-                self.cmd_vel.linear.x = 0.02
-            else:
-                self.cmd_vel.angular.z = 0.5
-                self.cmd_vel.linear.x = 0.02
-
+        elif prediction == 1: # Right
+            self.cmd_vel.angular.z = -1
+            self.cmd_vel.linear.x = 0
+        elif prediction == 2: # Left
+            self.cmd_vel.angular.z = 1
+            self.cmd_vel.linear.x = 0
+        elif prediction == 3: # Pedestrian
+            self.cmd_vel.angular.z = 0.0
+            self.cmd_vel.linear.x = 0.0
+        elif prediction == 4: # Speed_limit
+            self.cmd_vel.linear.x = 0.2
         else: # Nothing
             self.cmd_vel.angular.z = 0.0
             self.cmd_vel.linear.x = 0.0
-
-
-        if pred_prev != prediction:
-            self.last_time = time.time()
         
         pred_prev = prediction
 
@@ -201,7 +187,6 @@ def queueMonocular(msg):
         print(e)
     else:
         qMono.put(cv2Img)
-
 
 pred_prev = 0
 queueSize = 1      

@@ -9,7 +9,7 @@
 # Kognitív robotika projekt feladat
 Kognitív robotika tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettem egy mobil robotot.
 
-A projektet készített:
+A projektet készítette:
 * Czémán Róbert
 
 ## Tartalomjegyzék
@@ -28,7 +28,7 @@ A projektet készített:
 8.2. [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)  
 8.3 .[A problémák megoldása](#a-problémák-megoldása)  
 8.4. [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
-
+9. [Végeredmény](#végeredmény)
 
 ## Feladatleírás
 A feladat megvalósítása során a következő pontoknak kellett eleget tennünk:
@@ -41,16 +41,47 @@ A feladat megvalósítása során a következő pontoknak kellett eleget tennün
 ```console
 git clone https://github.com/czrobi2001/KogRob_HW_23_24.git
 ```
-2. XServer telepítése (grafikus alkalmazás futtatása miatt)
+2. WSL használata esetén: XServer telepítése (grafikus alkalmazás futtatása miatt)
     * a telepítés megtehető például a következő linkre kattintva: [XServer](https://sourceforge.net/projects/vcxsrv/)
     * XServer konfigurálása: Az *Extra settings* oldalon pipáljuk be a *Disable access control* opciót, valamint az *Additional parameters for VcXsrx* felirítú mezőbe gépeljük be a következők:
     ```console
     -nowgl
     ```
 3. Szükséges függőségek (dependency) telepítése:
-    * 1
-    * 2
-    * ...
+   
+    * Pythonhoz a scipy könytár az alábbi parancs segítségével:
+    ```console
+    pip install scipy
+    ```
+    *  Az alábbi ROS package-ek:
+    * `ros-noetic-actionlib`
+    * `ros-noetic-rospy`
+    * `ros-noetłc-theora-image-transport`
+    * `ros-noetic-urdf`
+    * `ros-noetic-xacro`
+    * `ros-noetic-roslaunch`
+    * `ros-noetic-joint-state-publisher`
+    * `ros-noetic-joint-state-publishér-gui`
+    * `ros-noetic-robot-state-publisher`
+    * `ros-noetic-rviz`
+    * `ros-noetic-ackermann-steering-controller`
+    * `ros-noetic-controller-manager`
+    * `ros-noetic-joint-state-controller`
+    * `ros-noetic-ros-control`
+    * `ros-noetic-ros-controllers`
+    * `ros-noetic-control-toolbox`
+    * `ros-noetic-gazebo-ros-control`
+    * `ros-noetic-joint-limits-interface`
+    * `ros-noetic-gazebo-ros`
+    * `ros-noetic-rqt-robot-steering`
+    * `ros-noetic-hector-trajectory-server`
+  
+    Ezek telepíthetők, az alábbi paranccsal:
+    ```console
+    rosdep install -y --from-paths src --ignore-src --rosdistro noetic -r
+    ```
+
+  4. Legvégül futtassuk le a workspace gyökérkönyvtárában a `catkin_make` parancsot.
 
 A lépések teljesítésével már képesek leszünk a szimulációt futtatni. Ennek a lépéseit a követkeező fejezet tartalmazza.
 
@@ -168,16 +199,18 @@ A robot irányításáért a `line_follower_cnn.py` nevű Python script felel.
   
 2. neurális háló tanítása
 
-    Az alkalmazott neurális háló LeNet jellegű konvolúciós neruális háló, ami 24x24 képet vár bemenetként, és 4 kimenetet szolgáltat, amik: 
+    Az alkalmazott neurális háló LeNet jellegű konvolúciós neruális háló, ami 128x128 képet vár bemenetként, és 6 kimenetet szolgáltat, amik: 
 
     * Előre
     * Jobbra
     * Balra
     * Ne mozdulj!
+    * Gyalogos
+    * Sebesség korlát
     
     A LeNet neurális hálóról bővebben: [LeNet](https://en.wikipedia.org/wiki/LeNet "LeNet")
 
-    Neurális háló tanításához az órán is használt Python scriptet használtam, aminek futtatásával a címkézett tanító minták alapján meghatározza a modell paramétereit, majd elmenti a tanítás során az aktuális modellt, valamint a legjobbat is.
+    Neurális háló tanításához az órán is használt Python scriptet használtam, aminek futtatásával a címkézett tanító minták alapján meghatározza a modell paramétereit.
 
     A tanításhoz az alábbi sort kell lefuttatni parancsorban, a scriptet tartalmazó mappán belül:
 
