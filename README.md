@@ -286,4 +286,7 @@ Az előző részben említett problémákra végül a következő megoldásokat 
 2. változtatva a beavatkozás mértékét új pálya ívekre futhat a robot az eddig megszokottól, így lehetséges, hogy újabb tanítás lesz szükséges az új képekkel
 3. egy kimenetet szolgáltat a neurális háló, amit ebben az esetben jobb lenne több kimnetre terjeszteni. Egyiken megmondani a kanyarodás mértékét, másikon pedig a képen detektált táblát, mert jelenleg egy kimeneten van ez lekezelve, és ahhoz hogy az elvártaknak megfeleljen a robot mozgása, jelentősen több tanítóképpel kellene felvenni.
 
-<video src="./assets/gazebo.mp4" width="320" height="240" controls></video>
+## Végeredmény
+Az elkészült projekt demonstrációs videója:
+
+  <a href="https://www.youtube.com/watch?v=CDbnmWm_7AQ"><img height="400" src="./assets/video.png"></a>
