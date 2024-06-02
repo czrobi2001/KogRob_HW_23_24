@@ -81,7 +81,10 @@ git clone https://github.com/czrobi2001/KogRob_HW_23_24.git
     rosdep install -y --from-paths src --ignore-src --rosdistro noetic -r
     ```
 
-  4. Legvégül futtassuk le a workspace gyökérkönyvtárában a `catkin_make` parancsot.
+4. Legvégül futtassuk le a workspace gyökérkönyvtárában a `catkin_make` parancsot.
+
+5. A neurális háló modell generálása a `train_network.py` futtatásával, hogy a 
+   képfeldolgozáshoz rendelkezésre álljon a tanított háló.
 
 A lépések teljesítésével már képesek leszünk a szimulációt futtatni. Ennek a lépéseit a követkeező fejezet tartalmazza.
 
@@ -195,7 +198,7 @@ A robot irányításáért a `line_follower_cnn.py` nevű Python script felel.
 
 1. tanító képek mentése, és címkézése `save_training_images.py` segítségével
   * a **gazebo** szimulációban készített kameraképek kimentése
-  * a képek címkézése, kiválogatása jobb, bal, előre, és semmi képekre,amik a neurális háló tanító bemenetei lesznek.
+  * a képek címkézése, kiválogatása jobb, bal, előre, állj, lassíts és semmi képekre,amik a neurális háló tanító bemenetei lesznek.
   
 2. neurális háló tanítása
 
@@ -205,9 +208,23 @@ A robot irányításáért a `line_follower_cnn.py` nevű Python script felel.
     * Jobbra
     * Balra
     * Ne mozdulj!
-    * Gyalogos
     * Sebesség korlát
     
+    ```python
+      if label == 'forward':
+          label = 0
+      elif label == 'right':
+          label = 1
+      elif label == 'left':
+          label = 2
+      elif label == 'pedestrian':
+          label = 3
+      elif label == 'speed_limit':
+          label = 4
+      else:
+          label = 5
+    ```
+
     A LeNet neurális hálóról bővebben: [LeNet](https://en.wikipedia.org/wiki/LeNet "LeNet")
 
     Neurális háló tanításához az órán is használt Python scriptet használtam, aminek futtatásával a címkézett tanító minták alapján meghatározza a modell paramétereit.
@@ -231,48 +248,24 @@ A robot irányításáért a `line_follower_cnn.py` nevű Python script felel.
     * a paramétereket, amiket feltételben vitsgálunk, a neurális háló kimenetei
 
     ```python
-        last_change = time.time()-self.last_time
-
-        print("Prediction %d, elapsed time %.3f" % (prediction, last_change ))
-        
-        # reset the timer when change the cnn output
-        if pred_prev != prediction:
-            self.last_time = time.time()
-
         # last change reaches defined value change the speed/rotation
         if prediction == 0: # Forward
+            self.cmd_vel.linear.x = 0.5
             self.cmd_vel.angular.z = 0
-
-            if last_change > 3:
-                self.cmd_vel.linear.x = 1
-            else:
-                self.cmd_vel.linear.x = 0.2
-
-        elif prediction == 1: # Left
-            if last_change > 0.5:
-                self.cmd_vel.angular.z = -1
-                self.cmd_vel.linear.x = 0
-            else:
-                self.cmd_vel.angular.z = -0.5
-                self.cmd_vel.linear.x = 0.02
-
-        elif prediction == 2: # Right
-            if last_change > 0.5:
-                self.cmd_vel.angular.z = 1
-                self.cmd_vel.linear.x = 0.02
-            else:
-                self.cmd_vel.angular.z = 0.5
-                self.cmd_vel.linear.x = 0.02
-
+        elif prediction == 1: # Right
+            self.cmd_vel.angular.z = -1
+            self.cmd_vel.linear.x = 0
+        elif prediction == 2: # Left
+            self.cmd_vel.angular.z = 1
+            self.cmd_vel.linear.x = 0
+        elif prediction == 3: # Pedestrian
+            self.cmd_vel.angular.z = 0.0
+            self.cmd_vel.linear.x = 0.0
+        elif prediction == 4: # Speed_limit
+            self.cmd_vel.linear.x = 0.2
         else: # Nothing
             self.cmd_vel.angular.z = 0.0
             self.cmd_vel.linear.x = 0.0
-
-
-        if pred_prev != prediction:
-            self.last_time = time.time()
-        
-        pred_prev = prediction
     ```
 5. a meghatározott paraméterek közlése
     * a paramétereket a *cmd_vel* topic-ba küldjük `Twist` üzenet formájában
@@ -280,7 +273,8 @@ A robot irányításáért a `line_follower_cnn.py` nevű Python script felel.
 ### Nehézségek a képfeldolgozás során
 Sok-sok kísérletezést követően eljutottam oda, hogy a robot képes végighaladni a teljes pályán hiba nélkül, egész jó tempóban. A korábbi verziókban az alábbi hibák álltak fenn:
 1. a kanyarokat nagyon lassan veszi be
-2. kanyar szélén nem ismeri fel a háló a kanyarodást 
+2. kanyar szélén nem ismeri fel a háló a kanyarodást
+3. nem elegendő pixel mérte esetén információ vesztés áll fent, emiatt a még az erőforrás zsempontjából megnegedhető pixel méret a 128x128
 
 ### A problémák megoldása
 Az előző részben említett problémákra végül a következő megoldásokat eszközöltem:
@@ -290,5 +284,6 @@ Az előző részben említett problémákra végül a következő megoldásokat 
 ### Az alkalmazott megoldások hátrányai
 1. az meghatározott időértékek alapvetően a jelenlegi pálya alapján lettek kikísérletezve, így nem garantálható, hogy minden más esetben megfelleően fog működni
 2. változtatva a beavatkozás mértékét új pálya ívekre futhat a robot az eddig megszokottól, így lehetséges, hogy újabb tanítás lesz szükséges az új képekkel
+3. egy kimenetet szolgáltat a neurális háló, amit ebben az esetben jobb lenne több kimnetre terjeszteni. Egyiken megmondani a kanyarodás mértékét, másikon pedig a képen detektált táblát, mert jelenleg egy kimeneten van ez lekezelve, és ahhoz hogy az elvártaknak megfeleljen a robot mozgása, jelentősen több tanítóképpel kellene felvenni.
 
 <video src="./assets/gazebo.mp4" width="320" height="240" controls></video>
