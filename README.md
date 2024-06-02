@@ -289,4 +289,4 @@ Az előző részben említett problémákra végül a következő megoldásokat 
 ## Végeredmény
 Az elkészült projekt demonstrációs videója:
 
-  <a href="https://www.youtube.com/watch?v=CDbnmWm_7AQ"><img height="400" src="./assets/video.png"></a>
+  <a href="https://www.youtube.com/watch?v=CDbnmWm_7AQ"><img height="400" src="./assets/Gazebo_sim.png"></a>
